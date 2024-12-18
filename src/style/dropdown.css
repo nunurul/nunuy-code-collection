@@ -1,0 +1,38 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content div:hover {
+  background-color: #f1f1f1;
+}
+
+.selected-option {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  display: inline-block;
+}
+
+.active {
+  background-color: #4caf50; /* Gaya untuk opsi yang aktif */
+  color: white; /* Warna teks untuk opsi yang aktif */
+}/*# sourceMappingURL=dropdown.css.map */
