@@ -1,44 +1,32 @@
-import { useState } from "react";
 import "../style/dropdown.css";
+import vue from "../assets/dropdown/vue.js.png";
+import react from "../assets/dropdown/react.js.png";
+import angular from "../assets/dropdown/angular.js.png";
+import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
-
 const Dropdown = () => {
-  const [selectedDropdown, setSelectedDropdown] = useState("Opsi 1");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLanguage, setIsLanguage] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef(null);
-
-  const options = [
-    {
-      id: 1,
-      label: "Opsi 1",
-    },
-    {
-      id: 2,
-      label: "Opsi 2",
-    },
-    {
-      id: 3,
-      label: "Opsi 3",
-    },
-    {
-      id: 4,
-      label: "Opsi 4",
-    },
+  const language = [
+    { id: 1, img: vue, name: "Vue.js", className: "vue" },
+    { id: 1, img: react, name: "React.js", className: "react" },
+    { id: 1, img: angular, name: "Angular.js", className: "angular" },
   ];
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setOpenDropdown(!openDropdown);
   };
 
-  const selectedOption = (label) => {
-    setSelectedDropdown(label);
-    setIsOpen(false);
+  const settingLanguage = (language) => {
+    setIsLanguage(language);
+    setOpenDropdown(false);
   };
 
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setIsOpen(false);
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setOpenDropdown(false);
     }
   };
 
@@ -47,28 +35,42 @@ const Dropdown = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  });
   return (
-    <div className="App">
-      <h1>Dropdown React</h1>
-      <div className="dropdown" ref={dropdownRef}>
-        <div className="selected-option" onClick={toggleDropdown}>
-          {selectedDropdown}
-        </div>
-        {isOpen && (
-          <div className="dropdown-content">
-            {options.map((opsi) => (
-              <div
-                // className=""
-                key={opsi.id}
-                className={selectedDropdown === opsi.label ? "active" : ""}
-                onClick={() => selectedOption(opsi.label)}
-              >
-                {opsi.label}
-              </div>
-            ))}
-          </div>
+    <div className={`dropdown ${isLanguage ? isLanguage.className : ""}`}>
+      <div className="box-img">
+        {isLanguage ? (
+          <img src={isLanguage.img} alt={isLanguage.name} />
+        ) : (
+          <p className="text">NO PHOTOS</p>
         )}
+      </div>
+      <div className="content" ref={dropdownRef}>
+        <div className="bar" onClick={toggleDropdown}>
+          <p className="text">
+            {isLanguage ? isLanguage.name : "Pilih Bahasa"}
+          </p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z" />
+          </svg>
+        </div>
+        <div className={`container ${openDropdown ? "active" : ""}`}>
+          {language.map((bahasa) => (
+            <div
+              className="item"
+              key={bahasa.id}
+              onClick={() => settingLanguage(bahasa)}
+            >
+              <img src={bahasa.img} alt={bahasa.name} />
+              <p className="teks">{bahasa.name}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
